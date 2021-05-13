@@ -1,2 +1,3 @@
+include ':configor'
 include ':app'
 rootProject.name = "recyclerviewconfigor"
