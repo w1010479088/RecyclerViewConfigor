@@ -1,10 +1,9 @@
 package com.bruceewu.configor.holder.base;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bruceewu.configor.IConfigor;
 import com.bruceewu.configor.R;
@@ -35,7 +34,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         List<DisplayItem> banners = new ArrayList<>();
         for (NormalSchemaor banner : items) {
             DisplayItem item = DisplayItem.newItem(DefaultHolders.Image.showType());
-            item.setShowData(banner.getImg());
+            item.setShowData(banner.img);
             item.setISchemaor(banner);
             item.setWidth(width);
             item.setHeight(height);

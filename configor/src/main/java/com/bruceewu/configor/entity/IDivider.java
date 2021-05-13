@@ -3,7 +3,7 @@ package com.bruceewu.configor.entity;
 import android.graphics.Rect;
 import android.view.View;
 
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 
 /**
  * 配置分割线的参数，写Holder的时候去实现它即可配置

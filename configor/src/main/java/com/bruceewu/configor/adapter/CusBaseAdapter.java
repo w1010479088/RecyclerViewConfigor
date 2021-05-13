@@ -1,9 +1,8 @@
 package com.bruceewu.configor.adapter;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bruceewu.configor.entity.CusOnClickListener;
 import com.bruceewu.configor.entity.DisplayItem;
