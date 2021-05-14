@@ -26,7 +26,7 @@ public interface ISchemaor {
     String getLink();
 
     static boolean isOcrUpdate(boolean isNative, String link) {
-        return isNative && (TextUtils.equals(link, IConfigor.configor.reformOCR()) || TextUtils.equals(link, IConfigor.configor.reformFace()) || TextUtils.equals(link, IConfigor.configor.reformAll()));
+        return isNative && (TextUtils.equals(link, IConfigor.configor().reformOCR()) || TextUtils.equals(link, IConfigor.configor().reformFace()) || TextUtils.equals(link, IConfigor.configor().reformAll()));
     }
 
     static void open(ISchemaor schemaor) {
@@ -34,6 +34,6 @@ public interface ISchemaor {
     }
 
     static void open(ISchemaor schemaor, String eventID) {
-        IConfigor.configor.postJump(schemaor, eventID);
+        IConfigor.configor().postJump(schemaor, eventID);
     }
 }

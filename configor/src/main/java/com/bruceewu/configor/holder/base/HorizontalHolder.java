@@ -22,7 +22,7 @@ public class HorizontalHolder extends CusBaseHolder {
                     .buildScrollType(RecyclerViewConfigor.ScrollType.Horizontal)
                     .build();
         } catch (Exception ex) {
-            IConfigor.configor.getLogger().log("HorizontalHolder Exception -> " + ex.getMessage());
+            IConfigor.configor().getLogger().log("HorizontalHolder Exception -> " + ex.getMessage());
         }
     }
 

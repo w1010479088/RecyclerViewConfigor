@@ -28,6 +28,6 @@ public class R10TopHolder extends CusBaseHolder implements IDivider {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.top = IConfigor.configor.dip2px(10);
+        outRect.top = IConfigor.configor().dip2px(10);
     }
 }

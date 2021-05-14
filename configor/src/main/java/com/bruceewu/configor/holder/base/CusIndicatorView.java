@@ -37,7 +37,7 @@ public class CusIndicatorView extends RelativeLayout {
             findViewById(IDS[i]).setSelected(i == pos);
             View view = findViewById(IDS[i]);
             ViewGroup.LayoutParams params = view.getLayoutParams();
-            params.width = (i == pos) ? IConfigor.configor.dip2px(12) : IConfigor.configor.dip2px(4);
+            params.width = (i == pos) ? IConfigor.configor().dip2px(12) : IConfigor.configor().dip2px(4);
             view.setLayoutParams(params);
         }
     }

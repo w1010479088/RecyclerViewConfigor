@@ -68,7 +68,7 @@ public class HolderParser {
             View rootView = LayoutInflater.from(parent.getContext()).inflate(layoutID, parent, false);
             return constructor.newInstance(rootView);
         } catch (Exception ex) {
-            ErrorLogger logger = IConfigor.configor.getLogger();
+            ErrorLogger logger = IConfigor.configor().getLogger();
             if (logger != null) {
                 logger.log(ex);
             }

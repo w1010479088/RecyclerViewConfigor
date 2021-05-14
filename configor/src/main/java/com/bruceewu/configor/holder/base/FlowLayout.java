@@ -32,8 +32,8 @@ public class FlowLayout extends ViewGroup {
     }
 
     public void set(int spaceDpHor, int spaceDpVer, List<DisplayItem> items, CusOnClickListener listener) {
-        this.mSpaceHor = IConfigor.configor.dip2px(spaceDpHor);
-        this.mSpaceVer = IConfigor.configor.dip2px(spaceDpVer);
+        this.mSpaceHor = IConfigor.configor().dip2px(spaceDpHor);
+        this.mSpaceVer = IConfigor.configor().dip2px(spaceDpVer);
         this.mItems = items;
         this.mListener = listener;
         refresh();

@@ -26,7 +26,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
 
     public static DisplayItem newInstance(float scale, List<NormalSchemaor> items) {
         DisplayItem gallery = DisplayItem.newItem(DefaultHolders.Gallery.showType());
-        int width = IConfigor.configor.getScreenWidth() - IConfigor.configor.dip2px(15 * 2);
+        int width = IConfigor.configor().getScreenWidth() - IConfigor.configor().dip2px(15 * 2);
         int height = (int) (width * scale);
         gallery.setWidth(width);
         gallery.setHeight(height);
@@ -85,7 +85,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
                 }
             });
         } catch (Exception ex) {
-            IConfigor.configor.getLogger().log(ex.getMessage());
+            IConfigor.configor().getLogger().log(ex.getMessage());
         }
     }
 

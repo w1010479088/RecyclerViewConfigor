@@ -24,7 +24,7 @@ public class EmptyHolder extends CusBaseHolder {
         int icon = item.getExtra("icon") == null ? 0 : (int) item.getExtra("icon");
         String tip = item.getExtra("tip") == null ? "暂无数据" : (String) item.getExtra("tip");
 
-        mHelper.setImage(R.id.img, IConfigor.configor.defaultEmptyIcon());
+        mHelper.setImage(R.id.img, IConfigor.configor().defaultEmptyIcon());
         mHelper.setHeight(R.id.root, height);
         mHelper.setText(R.id.tip, tip);
         if (icon == 0) {

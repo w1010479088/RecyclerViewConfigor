@@ -8,8 +8,8 @@ import com.bruceewu.configor.entity.CusOnClickListener;
 import com.bruceewu.configor.entity.DisplayItem;
 
 public class DividerHolder extends CusBaseHolder {
-    private final int defaultfColor = IConfigor.configor.defaultBgColor();
-    private final int defaultHeight = IConfigor.configor.dip2px(10);
+    private final int defaultfColor = IConfigor.configor().defaultBgColor();
+    private final int defaultHeight = IConfigor.configor().dip2px(10);
 
     public DividerHolder(View rootView) {
         super(rootView);

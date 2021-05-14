@@ -84,9 +84,9 @@ public class TabManager {
     private void configTab() {
         tab_layout.removeAllTabs();
         tab_layout.setTabIndicatorFullWidth(false);
-        tab_layout.setSelectedTabIndicatorColor(color(IConfigor.configor.colorIndicator()));
-        tab_layout.setTabTextColors(color(IConfigor.configor.colorUnselTabText()), color(IConfigor.configor.colorIndicator()));
-        tab_layout.setSelectedTabIndicatorHeight(IConfigor.configor.dip2px(3));
+        tab_layout.setSelectedTabIndicatorColor(color(IConfigor.configor().colorIndicator()));
+        tab_layout.setTabTextColors(color(IConfigor.configor().colorUnselTabText()), color(IConfigor.configor().colorIndicator()));
+        tab_layout.setSelectedTabIndicatorHeight(IConfigor.configor().dip2px(3));
     }
 
     private int color(int color) {

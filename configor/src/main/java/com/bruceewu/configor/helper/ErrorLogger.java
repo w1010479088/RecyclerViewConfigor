@@ -9,7 +9,7 @@ public interface ErrorLogger {
     void log(String content);
 
     static void logError(Exception content) {
-        ErrorLogger logger = IConfigor.configor.getLogger();
+        ErrorLogger logger = IConfigor.configor().getLogger();
         if (logger != null) {
             logger.log(content);
         }

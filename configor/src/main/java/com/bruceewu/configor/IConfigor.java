@@ -12,46 +12,51 @@ import com.bruceewu.configor.holder.DefaultHolders;
 
 import java.util.List;
 
-public interface IConfigor {
-    IConfigor configor = null;
+public abstract class IConfigor {
+    private static IConfigor configor = null;
 
-    static void configDefaultHolders() {
+    public static void init(IConfigor configor) {
+        IConfigor.configor = configor;
         config(DefaultHolders.getHolders());
     }
 
-    static void config(List<HolderEntity> holders) {
+    public static IConfigor configor() {
+        return IConfigor.configor;
+    }
+
+    public static void config(List<HolderEntity> holders) {
         HolderParser.config(holders);
     }
 
-    void showSingleImageText(Context context, String imgUrl, String text, TextView textView, int start, int end);
+    public abstract void showSingleImageText(Context context, String imgUrl, String text, TextView textView, int start, int end);
 
-    void loadImage(Context context, String url, ImageView imageView);
+    public abstract void loadImage(Context context, String url, ImageView imageView);
 
-    void loadRoundImageByDp(Context context, String url, ImageView imageView, int radius);
+    public abstract void loadRoundImageByDp(Context context, String url, ImageView imageView, int radius);
 
-    void setImageRTop(ImageView view, String url, int radiusDP);
+    public abstract void setImageRTop(ImageView view, String url, int radiusDP);
 
-    void clearImage(ImageView view);
+    public abstract void clearImage(ImageView view);
 
-    String reformOCR();
+    public abstract String reformOCR();
 
-    String reformFace();
+    public abstract String reformFace();
 
-    String reformAll();
+    public abstract String reformAll();
 
-    void postJump(ISchemaor schemaor, String eventID);
+    public abstract void postJump(ISchemaor schemaor, String eventID);
 
-    ErrorLogger getLogger();
+    public abstract ErrorLogger getLogger();
 
-    int dip2px(int dp);
+    public abstract int dip2px(int dp);
 
-    int getScreenWidth();
+    public abstract int getScreenWidth();
 
-    int defaultBgColor();
+    public abstract int defaultBgColor();
 
-    int defaultEmptyIcon();
+    public abstract int defaultEmptyIcon();
 
-    int colorIndicator();
+    public abstract int colorIndicator();
 
-    int colorUnselTabText();
+    public abstract int colorUnselTabText();
 }

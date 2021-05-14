@@ -28,6 +28,6 @@ public class FlowHolder extends CusBaseHolder implements IDivider {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.left = IConfigor.configor.dip2px(15);
+        outRect.left = IConfigor.configor().dip2px(15);
     }
 }
