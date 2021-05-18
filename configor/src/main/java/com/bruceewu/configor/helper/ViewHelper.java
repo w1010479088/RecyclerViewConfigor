@@ -52,7 +52,7 @@ public class ViewHelper {
             setText(viewID, content);
         } else {
             TextView view = getView(viewID);
-            IConfigor.configor().showSingleImageText(getContext(), iconUrl, content, view, start, end);
+            IConfigor.configor().showSingleImageText(view, iconUrl, content, start, end);
         }
     }
 
@@ -118,7 +118,7 @@ public class ViewHelper {
 
     public void setImage(int viewID, String url) {
         ImageView imageView = getView(viewID);
-        IConfigor.configor().loadImage(imageView.getContext(), url, imageView);
+        IConfigor.configor().loadImage(imageView, url);
     }
 
     public void setImage(int viewID, String url, int radiusDP) {
@@ -126,7 +126,7 @@ public class ViewHelper {
             setImage(viewID, url);
         } else {
             ImageView imageView = getView(viewID);
-            IConfigor.configor().loadRoundImageByDp(imageView.getContext(), url, imageView, radiusDP);
+            IConfigor.configor().loadRoundImageByDp(imageView, url, radiusDP);
         }
     }
 

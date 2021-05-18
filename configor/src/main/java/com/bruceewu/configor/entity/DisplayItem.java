@@ -1,5 +1,7 @@
 package com.bruceewu.configor.entity;
 
+import com.bruceewu.configor.IConfigor;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,9 +67,8 @@ public class DisplayItem {
         this.reserved = reserved;
     }
 
-    public void setISchemaor(ISchemaor schemaor) {
-        setActionType(ISchemaor.TAG_ROUTER);
-        putExtra(ISchemaor.TAG_ROUTER, schemaor);
+    public void setISchemaor(Object schemaor) {
+        IConfigor.configor().setSchemaor(this, schemaor);
     }
 
     public int spanSize() {

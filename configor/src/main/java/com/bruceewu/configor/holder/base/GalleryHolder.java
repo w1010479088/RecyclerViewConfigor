@@ -3,6 +3,7 @@ package com.bruceewu.configor.holder.base;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
 
 import com.bruceewu.configor.IConfigor;
@@ -10,7 +11,6 @@ import com.bruceewu.configor.R;
 import com.bruceewu.configor.adapter.CusBaseAdapter;
 import com.bruceewu.configor.entity.CusOnClickListener;
 import com.bruceewu.configor.entity.DisplayItem;
-import com.bruceewu.configor.entity.NormalSchemaor;
 import com.bruceewu.configor.helper.ThreadPool;
 import com.bruceewu.configor.holder.DefaultHolders;
 
@@ -24,7 +24,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
     private int mTimerUpdate;
     private PagerSnapHelper mSnapHelper;
 
-    public static DisplayItem newInstance(float scale, List<NormalSchemaor> items) {
+    public static DisplayItem newInstance(float scale, List<Pair<String, Object>> items) {
         DisplayItem gallery = DisplayItem.newItem(DefaultHolders.Gallery.showType());
         int width = IConfigor.configor().getScreenWidth() - IConfigor.configor().dip2px(15 * 2);
         int height = (int) (width * scale);
@@ -32,10 +32,10 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         gallery.setHeight(height);
 
         List<DisplayItem> banners = new ArrayList<>();
-        for (NormalSchemaor banner : items) {
+        for (Pair<String, Object> banner : items) {
             DisplayItem item = DisplayItem.newItem(DefaultHolders.Image.showType());
-            item.setShowData(banner.img);
-            item.setISchemaor(banner);
+            item.setShowData(banner.first);
+            item.setISchemaor(banner.second);
             item.setWidth(width);
             item.setHeight(height);
             item.putExtra("radius", 10);

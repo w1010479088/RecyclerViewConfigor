@@ -1,12 +1,11 @@
 package com.bruceewu.configor;
 
-import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bruceewu.configor.entity.DisplayItem;
 import com.bruceewu.configor.entity.HolderEntity;
 import com.bruceewu.configor.entity.HolderParser;
-import com.bruceewu.configor.entity.ISchemaor;
 import com.bruceewu.configor.helper.ErrorLogger;
 import com.bruceewu.configor.holder.DefaultHolders;
 
@@ -28,23 +27,15 @@ public abstract class IConfigor {
         HolderParser.config(holders);
     }
 
-    public abstract void showSingleImageText(Context context, String imgUrl, String text, TextView textView, int start, int end);
+    public abstract void showSingleImageText(TextView view, String imgUrl, String text, int start, int end);
 
-    public abstract void loadImage(Context context, String url, ImageView imageView);
+    public abstract void loadImage(ImageView view, String url);
 
-    public abstract void loadRoundImageByDp(Context context, String url, ImageView imageView, int radius);
+    public abstract void loadRoundImageByDp(ImageView view, String url, int radius);
 
     public abstract void setImageRTop(ImageView view, String url, int radiusDP);
 
     public abstract void clearImage(ImageView view);
-
-    public abstract String reformOCR();
-
-    public abstract String reformFace();
-
-    public abstract String reformAll();
-
-    public abstract void postJump(ISchemaor schemaor, String eventID);
 
     public abstract ErrorLogger getLogger();
 
@@ -59,4 +50,6 @@ public abstract class IConfigor {
     public abstract int colorIndicator();
 
     public abstract int colorUnselTabText();
+
+    public abstract void setSchemaor(DisplayItem item, Object schemaor);
 }
