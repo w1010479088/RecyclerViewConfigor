@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.bruceewu.configor.IConfigor;
 import com.bruceewu.configor.R;
 import com.bruceewu.configor.entity.IStatusLayout;
 
@@ -31,6 +33,12 @@ public class StatusLayout extends FrameLayout implements IStatusLayout {
                 mRetryListener.run();
             }
         });
+        View loading = findViewById(R.id.loading);
+        ViewGroup.LayoutParams params = loading.getLayoutParams();
+        int loadingSize = IConfigor.configor().loadingSize();
+        params.width = loadingSize;
+        params.height = loadingSize;
+        loading.setLayoutParams(params);
     }
 
     @Override

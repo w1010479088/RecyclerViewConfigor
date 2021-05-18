@@ -39,6 +39,8 @@ public abstract class IConfigor {
 
     public abstract ErrorLogger getLogger();
 
+    public abstract int loadingSize();
+
     public abstract int dip2px(int dp);
 
     public abstract int getScreenWidth();
