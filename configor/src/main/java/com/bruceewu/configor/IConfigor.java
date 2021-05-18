@@ -53,5 +53,7 @@ public abstract class IConfigor {
 
     public abstract int colorUnselTabText();
 
+    public abstract int colorSelTabText();
+
     public abstract void setSchemaor(DisplayItem item, Object schemaor);
 }

@@ -24,7 +24,7 @@ public class TabManager {
         tab_layout.setupWithViewPager(view_pager);
         tab_layout.setTabIndicatorFullWidth(false);
         tab_layout.setSelectedTabIndicatorColor(color(IConfigor.configor().colorIndicator()));
-        tab_layout.setTabTextColors(color(IConfigor.configor().colorUnselTabText()), color(IConfigor.configor().colorIndicator()));
+        tab_layout.setTabTextColors(color(IConfigor.configor().colorUnselTabText()), color(IConfigor.configor().colorSelTabText()));
         tab_layout.setSelectedTabIndicatorHeight(IConfigor.configor().dip2px(3));
     }
 
