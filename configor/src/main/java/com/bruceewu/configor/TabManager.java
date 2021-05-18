@@ -22,10 +22,14 @@ public class TabManager {
         this.manager = manager;
         tab_layout.setTabMode(tabScroll ? TabLayout.MODE_SCROLLABLE : TabLayout.MODE_FIXED);
         tab_layout.setupWithViewPager(view_pager);
+        tab_layout.setTabIndicatorFullWidth(false);
+        tab_layout.setSelectedTabIndicatorColor(color(IConfigor.configor().colorIndicator()));
+        tab_layout.setTabTextColors(color(IConfigor.configor().colorUnselTabText()), color(IConfigor.configor().colorIndicator()));
+        tab_layout.setSelectedTabIndicatorHeight(IConfigor.configor().dip2px(3));
     }
 
     public void config(List<Pair<String, Fragment>> items, ValueCallback<Integer> tabSelListener) {
-        configTab();
+        tab_layout.removeAllTabs();
         for (Pair<String, Fragment> page : items) {
             tab_layout.addTab(tab_layout.newTab());
         }
@@ -65,10 +69,13 @@ public class TabManager {
 
     public void setCurTab(String name) {
         for (int i = 0; i < tab_layout.getTabCount(); i++) {
-            String curTabName = tab_layout.getTabAt(i).getText().toString();
-            if (TextUtils.equals(curTabName, name)) {
-                setCurTab(i);
-                break;
+            TabLayout.Tab tab = tab_layout.getTabAt(i);
+            if (tab != null && tab.getText() != null) {
+                String curTabName = tab.getText().toString();
+                if (TextUtils.equals(curTabName, name)) {
+                    setCurTab(i);
+                    break;
+                }
             }
         }
     }
@@ -81,14 +88,6 @@ public class TabManager {
             }
         }
         return "";
-    }
-
-    private void configTab() {
-        tab_layout.removeAllTabs();
-        tab_layout.setTabIndicatorFullWidth(false);
-        tab_layout.setSelectedTabIndicatorColor(color(IConfigor.configor().colorIndicator()));
-        tab_layout.setTabTextColors(color(IConfigor.configor().colorUnselTabText()), color(IConfigor.configor().colorIndicator()));
-        tab_layout.setSelectedTabIndicatorHeight(IConfigor.configor().dip2px(3));
     }
 
     private int color(int color) {
