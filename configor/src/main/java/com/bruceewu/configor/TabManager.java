@@ -75,10 +75,12 @@ public class TabManager {
 
     public String getTabName(int pos) {
         if (pos >= 0 && pos < tab_layout.getTabCount()) {
-            return tab_layout.getTabAt(pos).getText().toString();
-        } else {
-            return "";
+            TabLayout.Tab tab = tab_layout.getTabAt(pos);
+            if (tab != null && tab.getText() != null) {
+                return tab.getText().toString();
+            }
         }
+        return "";
     }
 
     private void configTab() {
