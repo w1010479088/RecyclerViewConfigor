@@ -45,6 +45,21 @@ public abstract class CusBaseHolder extends RecyclerView.ViewHolder {
             params.height = height;
             view.setLayoutParams(params);
         }
+        setMargin(view, item);
+    }
+
+    protected void setMargin(View view, DisplayItem item) {
+        Object marginObj = item.getExtra("margin_hor");
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        if (marginObj == null) {
+            params.setMarginStart(0);
+            params.setMarginEnd(0);
+        } else {
+            int margin = (int) marginObj;
+            params.setMarginStart(margin);
+            params.setMarginEnd(margin);
+        }
+        view.setLayoutParams(params);
     }
 
     private void addWindowListener() {

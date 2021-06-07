@@ -31,18 +31,4 @@ public class R10TopHolder extends CusBaseHolder implements IDivider {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.top = IConfigor.configor().dip2px(10);
     }
-
-    public static void setMargin(View view, DisplayItem item) {
-        Object marginObj = item.getExtra("margin_hor");
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        if (marginObj == null) {
-            params.setMarginStart(0);
-            params.setMarginEnd(0);
-        } else {
-            int margin = (int) marginObj;
-            params.setMarginStart(margin);
-            params.setMarginEnd(margin);
-        }
-        view.setLayoutParams(params);
-    }
 }

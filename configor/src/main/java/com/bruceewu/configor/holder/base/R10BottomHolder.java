@@ -18,6 +18,6 @@ public class R10BottomHolder extends CusBaseHolder {
 
     @Override
     public void renderUI(DisplayItem item, CusOnClickListener listener) {
-        R10TopHolder.setMargin(mHelper.getRootView(), item);
+        setMargin(mHelper.getRootView(), item);
     }
 }
