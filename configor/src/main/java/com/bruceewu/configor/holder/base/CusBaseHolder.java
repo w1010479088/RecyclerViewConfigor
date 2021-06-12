@@ -39,9 +39,13 @@ public abstract class CusBaseHolder extends RecyclerView.ViewHolder {
     protected void reSize(DisplayItem item, View view) {
         int width = item.width();
         int height = item.height();
-        if (width != 0 && height != 0) {
+        if (width != 0) {
             ViewGroup.LayoutParams params = view.getLayoutParams();
             params.width = width;
+            view.setLayoutParams(params);
+        }
+        if (height != 0) {
+            ViewGroup.LayoutParams params = view.getLayoutParams();
             params.height = height;
             view.setLayoutParams(params);
         }
