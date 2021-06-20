@@ -40,7 +40,7 @@ public class TabManager {
         for (Pair<String, Fragment> page : items) {
             TabLayout.Tab tab = tab_layout.newTab();
             if (cusView != null) {
-                tab.setCustomView(cusView.createCusView(tab_layout.getContext(), page.first));
+                tab.setCustomView(cusView.createCusView(tab_layout.getContext()));
             }
             tab_layout.addTab(tab);
         }
@@ -48,9 +48,14 @@ public class TabManager {
         SimpleViewPagerAdapter adapter = new SimpleViewPagerAdapter(items, manager);
         view_pager.setAdapter(adapter);
         view_pager.setOffscreenPageLimit(items.size());
-        if (cusView == null) {
-            for (int i = 0; i < items.size(); i++) {
-                tab_layout.getTabAt(i).setText(items.get(i).first);
+        for (int i = 0; i < items.size(); i++) {
+            TabLayout.Tab tab = tab_layout.getTabAt(i);
+            String title = items.get(i).first;
+            if (cusView == null) {
+                tab.setText(title);
+            } else {
+                View customView = tab.getCustomView();
+                cusView.setTitle(customView, title);
             }
         }
         view_pager.setCurrentItem(0);
@@ -126,7 +131,9 @@ public class TabManager {
     }
 
     public interface ICusView {
-        View createCusView(Context context, String title);
+        View createCusView(Context context);
+
+        void setTitle(View cusView, String title);
 
         String getTabTitle(View cusView);
     }
