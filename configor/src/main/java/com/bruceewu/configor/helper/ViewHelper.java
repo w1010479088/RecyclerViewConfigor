@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bruceewu.configor.IConfigor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewHelper {
     private final View mRootView;
@@ -62,7 +66,7 @@ public class ViewHelper {
     }
 
     public void setTextHtml(int viewID, String content) {
-        ((TextView) getView(viewID)).setText(Html.fromHtml(content));
+        ((TextView) getView(viewID)).setText(Html.fromHtml(fixContent(content)));
     }
 
     public void setTextColor(int viewID, int color) {
@@ -153,11 +157,11 @@ public class ViewHelper {
     }
 
     public void setClick(int viewID, Runnable listener) {
-        getView(viewID).setOnClickListener(v -> listener.run());
+        click(getView(viewID), listener);
     }
 
     public void setClick(Runnable listener) {
-        mRootView.setOnClickListener(v -> listener.run());
+        click(mRootView, listener);
     }
 
     public void setAlpha(int viewID, float alpha) {
@@ -190,5 +194,35 @@ public class ViewHelper {
             icon.setBounds(0, 0, width, height);
             textView.setCompoundDrawables(null, null, null, icon);
         }
+    }
+
+    private String fixContent(String content) {
+        if (!TextUtils.isEmpty(content)) {
+            String fixedContent = content;
+            List<Pair<String, String>> tags = new ArrayList<>();
+            tags.add(new Pair<>("\n", "<br>"));//此处可能有很多Tag
+            for (Pair<String, String> tag : tags) {
+                fixedContent = fixedContent.replace(tag.first, tag.second);
+            }
+            return fixedContent;
+        }
+        return content;
+    }
+
+    private long mPreClickTime;
+
+    private void click(View view, Runnable listener) {
+        view.setOnClickListener(v -> {
+            if (curTime() - mPreClickTime > TIME_PERIOD) {
+                listener.run();
+                mPreClickTime = curTime();
+            }
+        });
+    }
+
+    private static final long TIME_PERIOD = 100;
+
+    private long curTime() {
+        return System.currentTimeMillis();
     }
 }
