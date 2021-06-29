@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bruceewu.configor.IConfigor;
 import com.bruceewu.configor.R;
@@ -28,7 +30,7 @@ public class StatusLayout extends FrameLayout implements IStatusLayout {
     public StatusLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.widget_status_layout, this);
-        findViewById(R.id.error_retry).setOnClickListener(v -> {
+        findViewById(R.id.error_container).setOnClickListener(v -> {
             if (mRetryListener != null) {
                 mRetryListener.run();
             }
@@ -52,6 +54,11 @@ public class StatusLayout extends FrameLayout implements IStatusLayout {
 
     public void setEmptyBg(int color) {
         findViewById(R.id.empty).setBackgroundColor(getContext().getResources().getColor(color));
+    }
+
+    public void setError(int errorIcon, String errorTip) {
+        ((ImageView) findViewById(R.id.error_icon)).setImageResource(errorIcon);
+        ((TextView) findViewById(R.id.error_tip)).setText(errorTip);
     }
 
     public void setRetryListener(Runnable listener) {
