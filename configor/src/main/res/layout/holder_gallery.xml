@@ -14,5 +14,5 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/list"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="@dimen/indicator_margin_bottom" />
 </RelativeLayout>

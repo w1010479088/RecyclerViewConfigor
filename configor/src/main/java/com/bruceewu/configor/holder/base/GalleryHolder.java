@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdater {
+    private static final int TIME_DEFAULT = 3;
     private boolean mInfinite;
     private boolean mNeedAutoScroll;
     private int mRealSize;
     private int mTimerUpdate;
+    private int mTimer = TIME_DEFAULT;
     private PagerSnapHelper mSnapHelper;
 
     public static DisplayItem newInstance(float scale, List<Pair<String, Object>> items) {
@@ -125,11 +127,18 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
     private void configInfinite(DisplayItem item) {
         Object infiniteObj = item.getExtra("infinite");
         Object autoScrollObj = item.getExtra("auto_scroll");
+        Object timeObj = item.getExtra("time");
         if (infiniteObj != null) {
             mInfinite = (boolean) infiniteObj;
         }
         if (autoScrollObj != null) {
             mNeedAutoScroll = (boolean) autoScrollObj;
+        }
+        if (timeObj != null) {
+            mTimer = (int) timeObj;
+            if (mTimer == 0) {
+                mTimer = TIME_DEFAULT;
+            }
         }
         getConfigor().config(mInfinite);
     }
@@ -152,7 +161,8 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
     public void update() {
         if (mNeedAutoScroll) {
             mTimerUpdate++;
-            if (mTimerUpdate % 3 == 0) {
+            if (mTimerUpdate % mTimer == 0) {
+                mTimerUpdate = 0;
                 View curView = mSnapHelper.findSnapView(getRecyclerView().getLayoutManager());
                 int pos = getRecyclerView().getLayoutManager().getPosition(curView);
                 getRecyclerView().smoothScrollToPosition(++pos);

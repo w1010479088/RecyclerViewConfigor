@@ -5,8 +5,8 @@
     <solid android:color="@color/color_indicator" />
 
     <size
-        android:width="12dp"
-        android:height="4dp" />
+        android:width="@dimen/indicator_sel_width"
+        android:height="@dimen/indicator_height" />
 
-    <corners android:radius="2dp" />
+    <corners android:radius="@dimen/indicator_radius" />
 </shape>

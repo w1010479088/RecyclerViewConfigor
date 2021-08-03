@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="indicator_margin_bottom">10dp</dimen>
+    <dimen name="indicator_margin_start">4dp</dimen>
+    <dimen name="indicator_sel_width">12dp</dimen>
+    <dimen name="indicator_unsel_width">4dp</dimen>
+    <dimen name="indicator_height">4dp</dimen>
+    <dimen name="indicator_radius">2dp</dimen>
+</resources>
