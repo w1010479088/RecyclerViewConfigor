@@ -11,12 +11,15 @@ import android.util.Pair;
 import android.view.View;
 import android.webkit.ValueCallback;
 
+import com.bruceewu.configor.entity.IShow;
+
 import java.util.List;
 
 public class TabManager {
     private final TabLayout tab_layout;
     private final ViewPager view_pager;
     private final FragmentManager manager;
+    private List<Pair<String, Fragment>> items;
     private ICusView cusView;
 
     public TabManager(TabLayout tab_layout, ViewPager view_pager, boolean tabScroll, FragmentManager manager) {
@@ -31,14 +34,44 @@ public class TabManager {
     }
 
     public void config(List<Pair<String, Fragment>> items, ValueCallback<Integer> tabSelListener) {
+        this.items = items;
         SimpleViewPagerAdapter adapter = new SimpleViewPagerAdapter(items, manager);
         view_pager.setAdapter(adapter);
         view_pager.setOffscreenPageLimit(items.size());
         view_pager.setCurrentItem(0);
-        configTabs(items, tabSelListener);
+        tab_layout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                if (tabSelListener != null) {
+                    tabSelListener.onReceiveValue(pos);
+                }
+                Pair<String, Fragment> pair = items.get(pos);
+                Fragment fragment = pair.second;
+                if (fragment instanceof IShow) {
+                    ((IShow) fragment).show();
+                }
+                if (cusView != null && tab.getCustomView() != null) {
+                    cusView.tabSel(tab.getCustomView(), true);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (cusView != null) {
+                    cusView.tabSel(tab.getCustomView(), false);
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        configTabs();
     }
 
-    private void configTabs(List<Pair<String, Fragment>> items, ValueCallback<Integer> tabSelListener) {
+    private void configTabs() {
         tab_layout.removeAllTabs();
         tab_layout.setupWithViewPager(view_pager);
         if (cusView == null) {
@@ -68,29 +101,6 @@ public class TabManager {
                 cusView.tabSel(customView, i == 0);
             }
         }
-        tab_layout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tabSelListener != null) {
-                    tabSelListener.onReceiveValue(tab.getPosition());
-                }
-                if (cusView != null) {
-                    cusView.tabSel(tab.getCustomView(), true);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                if (cusView != null) {
-                    cusView.tabSel(tab.getCustomView(), false);
-                }
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     public void setCurTab(int pos) {

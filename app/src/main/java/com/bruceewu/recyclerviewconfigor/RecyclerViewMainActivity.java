@@ -134,7 +134,7 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
             pages.add(new Pair<>("大俊子" + i, new TestFragment()));
         }
         manager.config(pages, pos -> {
-            Log.d("pos", String.valueOf(pos));
+            LogUtils.log(String.valueOf(pos));
         });
     }
 }
