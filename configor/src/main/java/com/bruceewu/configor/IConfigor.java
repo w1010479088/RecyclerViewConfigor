@@ -12,11 +12,15 @@ import com.bruceewu.configor.holder.DefaultHolders;
 import java.util.List;
 
 public abstract class IConfigor {
+    private static boolean mInit;
     private static IConfigor configor = null;
 
     public static void init(IConfigor configor) {
-        IConfigor.configor = configor;
-        config(DefaultHolders.getHolders());
+        if (!mInit) {
+            mInit = true;
+            IConfigor.configor = configor;
+            config(DefaultHolders.getHolders());
+        }
     }
 
     public static IConfigor configor() {
