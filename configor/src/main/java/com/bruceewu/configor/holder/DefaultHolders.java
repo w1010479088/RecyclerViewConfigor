@@ -17,6 +17,8 @@ import com.bruceewu.configor.holder.base.R10BottomHolder;
 import com.bruceewu.configor.holder.base.R10EndHolder;
 import com.bruceewu.configor.holder.base.R10StartHolder;
 import com.bruceewu.configor.holder.base.R10TopHolder;
+import com.bruceewu.configor.holder.base.R5BottomHolder;
+import com.bruceewu.configor.holder.base.R5TopHolder;
 import com.bruceewu.configor.holder.base.TagHolder;
 
 import java.util.ArrayList;
@@ -35,6 +37,10 @@ public enum DefaultHolders {
     R10End("r10_end", R10EndHolder.class),
     R10Top("r10_top", R10TopHolder.class),
     R10Bottom("r10_bottom", R10BottomHolder.class),
+    R5Top("r5_top", R5TopHolder.class),
+    R5Bottom("r5_bottom", R5BottomHolder.class),
+
+
     Gallery("gallery", GalleryHolder.class),
     Image("image", ImageHolder.class),
     Footer("footer", FooterHolder.class),
