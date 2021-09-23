@@ -56,6 +56,11 @@ public class StatusLayout extends FrameLayout implements IStatusLayout {
         findViewById(R.id.empty).setBackgroundColor(getContext().getResources().getColor(color));
     }
 
+    public void setEmpty(int emptyIcon, String emptyTip) {
+        ((ImageView) findViewById(R.id.empty_icon)).setImageResource(emptyIcon);
+        ((TextView) findViewById(R.id.empty_tip)).setText(emptyTip);
+    }
+
     public void setError(int errorIcon, String errorTip) {
         ((ImageView) findViewById(R.id.error_icon)).setImageResource(errorIcon);
         ((TextView) findViewById(R.id.error_tip)).setText(errorTip);
