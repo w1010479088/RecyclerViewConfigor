@@ -21,6 +21,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
     private static final int TIME_DEFAULT = 3;
     private boolean mInfinite;
     private boolean mNeedAutoScroll;
+    private boolean mHideIndicator;
     private int mRealSize;
     private int mTimerUpdate;
     private int mTimer = TIME_DEFAULT;
@@ -99,7 +100,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         mRealSize = item.children().size();
         CusIndicatorView indicatorView = mHelper.getView(R.id.indicator);
         indicatorView.setSize(mRealSize);
-        mHelper.setVisibility(R.id.indicator, mRealSize != 1);
+        mHelper.setVisibility(R.id.indicator, !mHideIndicator && mRealSize != 1);
 
         int realStart = 0;
         int resetPos = fixStart(realStart);
@@ -128,6 +129,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         Object infiniteObj = item.getExtra("infinite");
         Object autoScrollObj = item.getExtra("auto_scroll");
         Object timeObj = item.getExtra("time");
+        Object hideIndicatorObj = item.getExtra("hide_indicator");
         if (infiniteObj != null) {
             mInfinite = (boolean) infiniteObj;
         }
@@ -139,6 +141,9 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
             if (mTimer == 0) {
                 mTimer = TIME_DEFAULT;
             }
+        }
+        if (hideIndicatorObj != null) {
+            mHideIndicator = (boolean) hideIndicatorObj;
         }
         getConfigor().config(mInfinite);
     }
