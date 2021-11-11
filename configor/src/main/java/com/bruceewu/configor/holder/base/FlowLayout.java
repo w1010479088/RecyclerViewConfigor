@@ -122,8 +122,4 @@ public class FlowLayout extends ViewGroup {
         }
         return t + itemHeight + paddingBottom;
     }
-
-    private void log(String content) {
-        Log.d("tag_log_xyf", content);
-    }
 }
