@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +14,8 @@ import com.bruceewu.configor.IConfigor;
 import com.bruceewu.configor.TabManager;
 import com.bruceewu.configor.entity.DisplayItem;
 import com.bruceewu.configor.helper.ErrorLogger;
+import com.bruceewu.configor.holder.DefaultHolders;
+import com.bruceewu.configor.holder.base.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recycler_main);
 
         testTab();
+        testFlow();
     }
 
     private void testTab() {
@@ -136,5 +138,32 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
         manager.config(pages, pos -> {
             LogUtils.log(String.valueOf(pos));
         });
+    }
+
+    private void testFlow() {
+        FlowLayout layout = findViewById(R.id.flow);
+        List<DisplayItem> items = new ArrayList<>();
+        items.add(newTag("大俊子"));
+        items.add(newTag("大俊子1"));
+        items.add(newTag("大俊子12"));
+        items.add(newTag("大俊子123"));
+        items.add(newTag("大俊子1234"));
+        items.add(newTag("大俊子12345"));
+        items.add(newTag("大俊子123456"));
+        items.add(newTag("大俊子1234567"));
+        items.add(newTag("大俊子12345678"));
+        items.add(newTag("大俊子123456789"));
+        items.add(newTag("大俊子12345678910"));
+        items.add(newTag("大俊子1234567891011"));
+        items.add(newTag("大俊子123456789101112"));
+        items.add(newTag("大俊子12345678910111213"));
+        items.add(newTag("大俊子1234567891011121314"));
+        layout.set(10, 10, items, item -> LogUtils.log("点击有效!" + item.showData()));
+    }
+
+    private DisplayItem newTag(String content) {
+        DisplayItem item = DisplayItem.newItem(DefaultHolders.TAG.showType());
+        item.setShowData(content);
+        return item;
     }
 }

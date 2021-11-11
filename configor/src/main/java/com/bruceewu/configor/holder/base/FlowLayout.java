@@ -2,6 +2,7 @@ package com.bruceewu.configor.holder.base;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -79,15 +80,19 @@ public class FlowLayout extends ViewGroup {
     }
 
     private void reLayout() {
-        int parentWidth = getMeasuredWidth();
-        int l = 0;
-        int t = 0;
+        int paddingStart = getPaddingStart();
+        int paddingEnd = getPaddingEnd();
+        int paddingTop = getPaddingTop();
+
+        int validWidth = getMeasuredWidth() - paddingStart - paddingEnd;
+        int l = paddingStart;
+        int t = paddingTop;
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             int width = child.getMeasuredWidth();
             int height = child.getMeasuredHeight();
-            if (l + width > parentWidth) {
-                l = 0;
+            if (l + width > validWidth) {
+                l = paddingStart;
                 t += height + mSpaceVer;
             }
             child.layout(l, t, l + width, t + height);
@@ -96,21 +101,29 @@ public class FlowLayout extends ViewGroup {
     }
 
     private int getParentHeight() {
-        int parentWidth = getMeasuredWidth();
-        int l = 0;
-        int t = 0;
+        int paddingStart = getPaddingStart();
+        int paddingEnd = getPaddingEnd();
+        int paddingTop = getPaddingTop();
+        int paddingBottom = getPaddingBottom();
+        int validWidth = getMeasuredWidth() - paddingStart - paddingEnd;
+        int l = paddingStart;
+        int t = paddingTop;
         int itemHeight = 0;
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             int width = child.getMeasuredWidth();
             int height = child.getMeasuredHeight();
             itemHeight = height;
-            if (l + width > parentWidth) {
-                l = 0;
+            if (l + width > validWidth) {
+                l = paddingStart;
                 t += height + mSpaceVer;
             }
             l += width + mSpaceHor;
         }
-        return t + itemHeight;
+        return t + itemHeight + paddingBottom;
+    }
+
+    private void log(String content) {
+        Log.d("tag_log_xyf", content);
     }
 }
