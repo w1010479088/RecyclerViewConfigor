@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:ignore="HardcodedText">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
@@ -9,10 +11,27 @@
         android:layout_height="match_parent" />
 
     <com.bruceewu.configor.holder.base.CusIndicatorView
-        android:id="@+id/indicator"
+        android:id="@+id/indicator_dot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/list"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/indicator_margin_bottom" />
+        android:layout_marginBottom="@dimen/indicator_margin_bottom"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/indicator_num"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_solid_grey_r10"
+        android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        tools:text="1/20" />
 </RelativeLayout>

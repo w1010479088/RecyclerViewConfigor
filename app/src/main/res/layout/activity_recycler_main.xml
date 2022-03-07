@@ -5,24 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".RecyclerViewMainActivity">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#40FF" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tab_layout"
-        android:background="#40F0" />
-
-    <com.bruceewu.configor.holder.base.FlowLayout
-        android:id="@+id/flow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:background="#40F0"
-        android:padding="20dp" />
+        android:layout_height="match_parent" />
 </RelativeLayout>

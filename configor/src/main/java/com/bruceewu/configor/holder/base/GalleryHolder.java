@@ -3,6 +3,7 @@ package com.bruceewu.configor.holder.base;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 
@@ -18,21 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdater {
+    public static final String INDICATOR_TYPE_DOT = "dot";
+    public static final String INDICATOR_TYPE_NUM = "num";
+
     private static final int TIME_DEFAULT = 3;
     private boolean mInfinite;
     private boolean mNeedAutoScroll;
     private boolean mHideIndicator;
+    private String mIndicatorType;
     private int mRealSize;
     private int mTimerUpdate;
     private int mTimer = TIME_DEFAULT;
     private PagerSnapHelper mSnapHelper;
 
     public static DisplayItem newInstance(float scale, List<Pair<String, Object>> items) {
-        DisplayItem gallery = DisplayItem.newItem(DefaultHolders.Gallery.showType());
         int width = IConfigor.configor().getScreenWidth() - IConfigor.configor().dip2px(15 * 2);
         int height = (int) (width * scale);
-        gallery.setWidth(width);
-        gallery.setHeight(height);
 
         List<DisplayItem> banners = new ArrayList<>();
         for (Pair<String, Object> banner : items) {
@@ -44,12 +46,19 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
             item.putExtra("radius", 10);
             banners.add(item);
         }
-
         boolean needScroll = banners.size() > 1;
-        gallery.putExtra("infinite", needScroll);
-        gallery.putExtra("auto_scroll", needScroll);
-        gallery.setChildren(banners);
-        return gallery;
+
+        return new GalleryHolder
+                .Builder()
+                .setWidth(width)
+                .setHeight(height)
+                .setInfinite(needScroll)
+                .setAutoScroll(needScroll)
+                .setTime(TIME_DEFAULT)
+                .setHideIndicator(false)
+                .setIndicatorType(INDICATOR_TYPE_DOT)
+                .setChildren(banners)
+                .build();
     }
 
     @Override
@@ -98,9 +107,13 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         super.renderUI(item, listener);
 
         mRealSize = item.children().size();
-        CusIndicatorView indicatorView = mHelper.getView(R.id.indicator);
-        indicatorView.setSize(mRealSize);
-        mHelper.setVisibility(R.id.indicator, !mHideIndicator && mRealSize != 1);
+        boolean showDotIndicator = showDotIndicator();
+        if (showDotIndicator) {
+            CusIndicatorView indicatorView = mHelper.getView(R.id.indicator_dot);
+            indicatorView.setSize(mRealSize);
+        }
+        mHelper.setVisibility(R.id.indicator_dot, showDotIndicator);
+        mHelper.setVisibility(R.id.indicator_num, showNumIndicator());
 
         int realStart = 0;
         int resetPos = fixStart(realStart);
@@ -108,9 +121,22 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         getRecyclerView().scrollToPosition(resetPos);
     }
 
+    private boolean showDotIndicator() {
+        return !mHideIndicator && mRealSize != 1 && TextUtils.equals(mIndicatorType, INDICATOR_TYPE_DOT);
+    }
+
+    private boolean showNumIndicator() {
+        return !mHideIndicator && mRealSize != 1 && TextUtils.equals(mIndicatorType, INDICATOR_TYPE_NUM);
+    }
+
     private void setPos(int pos) {
-        CusIndicatorView indicatorView = mHelper.getView(R.id.indicator);
-        indicatorView.setCur(fixPos(pos));
+        int realPos = fixPos(pos);
+        if (showDotIndicator()) {
+            CusIndicatorView indicatorView = mHelper.getView(R.id.indicator_dot);
+            indicatorView.setCur(realPos);
+        } else if (showNumIndicator()) {
+            mHelper.setText(R.id.indicator_num, String.format("%d/%d", (realPos + 1), mRealSize));
+        }
     }
 
     private int fixPos(int pos) {
@@ -130,6 +156,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         Object autoScrollObj = item.getExtra("auto_scroll");
         Object timeObj = item.getExtra("time");
         Object hideIndicatorObj = item.getExtra("hide_indicator");
+        Object indicatorTypeObj = item.getExtra("indicator_type");
         if (infiniteObj != null) {
             mInfinite = (boolean) infiniteObj;
         }
@@ -144,6 +171,11 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         }
         if (hideIndicatorObj != null) {
             mHideIndicator = (boolean) hideIndicatorObj;
+        }
+        if (indicatorTypeObj != null) {
+            mIndicatorType = (String) indicatorTypeObj;
+        } else {
+            mIndicatorType = INDICATOR_TYPE_DOT;
         }
         getConfigor().config(mInfinite);
     }
@@ -172,6 +204,56 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
                 int pos = getRecyclerView().getLayoutManager().getPosition(curView);
                 getRecyclerView().smoothScrollToPosition(++pos);
             }
+        }
+    }
+
+    public static class Builder {
+        private final DisplayItem gallery = DisplayItem.newItem(DefaultHolders.Gallery.showType());
+
+        public Builder setWidth(int width) {
+            gallery.setWidth(width);
+            return this;
+        }
+
+        public Builder setHeight(int height) {
+            gallery.setHeight(height);
+            return this;
+        }
+
+        public Builder setInfinite(boolean infinite) {
+            gallery.putExtra("infinite", infinite);
+            return this;
+        }
+
+        public Builder setAutoScroll(boolean autoScroll) {
+            gallery.putExtra("auto_scroll", autoScroll);
+            return this;
+        }
+
+        public Builder setHideIndicator(boolean hideIndicator) {
+            gallery.putExtra("hide_indicator", hideIndicator);
+            return this;
+        }
+
+        //目前有两种,中部的小点,和右下角的数字3/10模式,后续可以添加
+        //type = INDICATOR_TYPE_DOT,INDICATOR_TYPE_NUM
+        public Builder setIndicatorType(String type) {
+            gallery.putExtra("indicator_type", type);
+            return this;
+        }
+
+        public Builder setTime(int time) {
+            gallery.putExtra("time", time);
+            return this;
+        }
+
+        public Builder setChildren(List<DisplayItem> children) {
+            gallery.setChildren(children);
+            return this;
+        }
+
+        public DisplayItem build() {
+            return gallery;
         }
     }
 }

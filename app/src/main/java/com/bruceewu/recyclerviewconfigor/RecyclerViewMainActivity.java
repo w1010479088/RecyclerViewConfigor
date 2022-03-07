@@ -1,21 +1,17 @@
 package com.bruceewu.recyclerviewconfigor;
 
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bruceewu.configor.IConfigor;
-import com.bruceewu.configor.TabManager;
+import com.bruceewu.configor.RecyclerViewConfigor;
 import com.bruceewu.configor.entity.DisplayItem;
 import com.bruceewu.configor.helper.ErrorLogger;
 import com.bruceewu.configor.holder.DefaultHolders;
-import com.bruceewu.configor.holder.base.FlowLayout;
+import com.bruceewu.configor.holder.base.GalleryHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +22,45 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_main);
-
-        testTab();
-        testFlow();
+        initRecyclerView();
+        testRecyclerView();
     }
 
-    private void testTab() {
+    private void testRecyclerView() {
+        RecyclerViewConfigor builder = new RecyclerViewConfigor
+                .Builder()
+                .buildRecyclerView(findViewById(R.id.list))
+                .buildScrollType(RecyclerViewConfigor.ScrollType.Vertical)
+                .buildRefresh(false)
+                .buildLoadMore(false)
+                .buildInfinite(false)
+                .buildClickListener(item -> {
+                })
+                .buildBgColor(getResources().getColor(R.color.black))
+                .build();
+
+        List<DisplayItem> items = new ArrayList<>();
+        List<DisplayItem> children = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            children.add(DisplayItem.newItem(DefaultHolders.Error.showType()));
+        }
+
+        DisplayItem gallery = new GalleryHolder
+                .Builder()
+                .setInfinite(true)
+                .setAutoScroll(true)
+                .setHideIndicator(false)
+                .setIndicatorType(GalleryHolder.INDICATOR_TYPE_NUM)
+                .setTime(2)
+                .setChildren(children)
+                .build();
+
+        items.add(gallery);
+
+        builder.set(items);
+    }
+
+    private void initRecyclerView() {
         IConfigor.init(new IConfigor() {
             @Override
             public void showSingleImageText(TextView view, String imgUrl, String text, int start, int end) {
@@ -60,7 +89,17 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
 
             @Override
             public ErrorLogger getLogger() {
-                return null;
+                return new ErrorLogger() {
+                    @Override
+                    public void log(Exception ex) {
+                        LogUtils.log(ex.getMessage());
+                    }
+
+                    @Override
+                    public void log(String content) {
+                        LogUtils.log(content);
+                    }
+                };
             }
 
             @Override
@@ -70,12 +109,12 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
 
             @Override
             public int dip2px(int dp) {
-                return dp * 2;
+                return 0;
             }
 
             @Override
             public int getScreenWidth() {
-                return 1080;
+                return 0;
             }
 
             @Override
@@ -90,17 +129,17 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
 
             @Override
             public int colorIndicator() {
-                return R.color.color_indicator;
+                return 0;
             }
 
             @Override
             public int colorUnselTabText() {
-                return R.color.teal_700;
+                return 0;
             }
 
             @Override
             public int colorSelTabText() {
-                return R.color.color_indicator;
+                return 0;
             }
 
             @Override
@@ -108,62 +147,5 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
 
             }
         });
-        TabManager manager = new TabManager(findViewById(R.id.tab_layout), findViewById(R.id.view_pager), true, getSupportFragmentManager());
-        manager.setCusView(new TabManager.ICusView() {
-            @Override
-            public View createCusView(Context context) {
-                return new TestTabView(context);
-            }
-
-            @Override
-            public void setTitle(View cusView, String title) {
-                ((TestTabView) cusView).set(title);
-            }
-
-            @Override
-            public void tabSel(View cusView, boolean sel) {
-                ((TestTabView) cusView).set(sel);
-            }
-
-            @Override
-            public String getTabTitle(View cusView) {
-                return ((TestTabView) cusView).get();
-            }
-
-        });
-        List<Pair<String, Fragment>> pages = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            pages.add(new Pair<>("大俊子" + i, new TestFragment()));
-        }
-        manager.config(pages, pos -> {
-            LogUtils.log(String.valueOf(pos));
-        });
-    }
-
-    private void testFlow() {
-        FlowLayout layout = findViewById(R.id.flow);
-        List<DisplayItem> items = new ArrayList<>();
-        items.add(newTag("大俊子"));
-        items.add(newTag("大俊子1"));
-        items.add(newTag("大俊子12"));
-        items.add(newTag("大俊子123"));
-        items.add(newTag("大俊子1234"));
-        items.add(newTag("大俊子12345"));
-        items.add(newTag("大俊子123456"));
-        items.add(newTag("大俊子1234567"));
-        items.add(newTag("大俊子12345678"));
-        items.add(newTag("大俊子123456789"));
-        items.add(newTag("大俊子12345678910"));
-        items.add(newTag("大俊子1234567891011"));
-        items.add(newTag("大俊子123456789101112"));
-        items.add(newTag("大俊子12345678910111213"));
-        items.add(newTag("大俊子1234567891011121314"));
-        layout.set(10, 10, items, item -> LogUtils.log("点击有效!" + item.showData()));
-    }
-
-    private DisplayItem newTag(String content) {
-        DisplayItem item = DisplayItem.newItem(DefaultHolders.TAG.showType());
-        item.setShowData(content);
-        return item;
     }
 }
