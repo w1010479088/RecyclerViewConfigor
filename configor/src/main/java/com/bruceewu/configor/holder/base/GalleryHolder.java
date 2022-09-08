@@ -40,10 +40,10 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         for (Pair<String, Object> banner : items) {
             DisplayItem item = DisplayItem.newItem(DefaultHolders.Image.showType());
             item.setShowData(banner.first);
-            item.setISchemaor(banner.second);
+            item.putExtra("obj", banner.second);
+            item.putExtra("radius", 10);
             item.setWidth(width);
             item.setHeight(height);
-            item.putExtra("radius", 10);
             banners.add(item);
         }
         boolean needScroll = banners.size() > 1;

@@ -141,11 +141,6 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
             public int colorSelTabText() {
                 return 0;
             }
-
-            @Override
-            public void setSchemaor(DisplayItem item, Object schemaor) {
-
-            }
         });
     }
 }

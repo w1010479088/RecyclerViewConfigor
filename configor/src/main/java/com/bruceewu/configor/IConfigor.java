@@ -3,7 +3,6 @@ package com.bruceewu.configor;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bruceewu.configor.entity.DisplayItem;
 import com.bruceewu.configor.entity.HolderEntity;
 import com.bruceewu.configor.entity.HolderParser;
 import com.bruceewu.configor.helper.ErrorLogger;
@@ -58,6 +57,4 @@ public abstract class IConfigor {
     public abstract int colorUnselTabText();
 
     public abstract int colorSelTabText();
-
-    public abstract void setSchemaor(DisplayItem item, Object schemaor);
 }

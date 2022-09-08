@@ -66,7 +66,18 @@ public class ViewHelper {
     }
 
     public void setTextHtml(int viewID, String content) {
-        ((TextView) getView(viewID)).setText(Html.fromHtml(fixContent(content)));
+        if (TextUtils.isEmpty(content)) {
+            setText(viewID, "");
+        } else {
+            ((TextView) getView(viewID)).setText(Html.fromHtml(fixContent(content)));
+        }
+    }
+
+    public void setTextHtmlWithGone(int viewID, String content) {
+        setVisibility(viewID, !TextUtils.isEmpty(content));
+        if (!TextUtils.isEmpty(content)) {
+            ((TextView) getView(viewID)).setText(Html.fromHtml(fixContent(content)));
+        }
     }
 
     public void setTextColor(int viewID, int color) {
