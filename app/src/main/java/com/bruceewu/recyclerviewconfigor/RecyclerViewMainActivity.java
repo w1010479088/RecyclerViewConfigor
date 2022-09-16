@@ -32,8 +32,7 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
 
     private final ThreadPool.IUpdater updater = new ThreadPool.TimeRepeator(4, () -> {
         LogUtils.log("time tag......");
-        count++;
-        if (count == 10) {
+        if (++count == 10) {
             unRegister();
         }
     });
