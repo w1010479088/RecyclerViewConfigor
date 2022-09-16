@@ -10,6 +10,7 @@ import com.bruceewu.configor.IConfigor;
 import com.bruceewu.configor.RecyclerViewConfigor;
 import com.bruceewu.configor.entity.DisplayItem;
 import com.bruceewu.configor.helper.ErrorLogger;
+import com.bruceewu.configor.helper.ThreadPool;
 import com.bruceewu.configor.holder.DefaultHolders;
 import com.bruceewu.configor.holder.base.GalleryHolder;
 
@@ -22,8 +23,28 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_main);
+        initTimer();
         initRecyclerView();
         testRecyclerView();
+    }
+
+    private int count;
+
+    private final ThreadPool.IUpdater updater = new ThreadPool.TimeRepeator(4, () -> {
+        LogUtils.log("time tag......");
+        count++;
+        if (count == 10) {
+            unRegister();
+        }
+    });
+
+    private void unRegister() {
+        ThreadPool.unRegisterObserver(updater);
+        LogUtils.log("time stop");
+    }
+
+    private void initTimer() {
+        ThreadPool.registerObserver(updater);
     }
 
     private void testRecyclerView() {

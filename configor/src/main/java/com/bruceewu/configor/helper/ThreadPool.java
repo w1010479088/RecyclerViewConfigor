@@ -62,4 +62,23 @@ public class ThreadPool {
     public interface IUpdater {
         void update();
     }
+
+    public static class TimeRepeator implements IUpdater {
+        private final int DURATION;
+        private final IUpdater updater;
+        private int cur;
+
+        public TimeRepeator(int duration, IUpdater updater) {
+            this.DURATION = duration;
+            this.updater = updater;
+        }
+
+        @Override
+        public void update() {
+            if (++cur % DURATION == 0) {
+                cur = 0;
+                updater.update();
+            }
+        }
+    }
 }
