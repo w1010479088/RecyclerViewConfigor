@@ -153,13 +153,25 @@ public class RecyclerViewConfigor {
         }
     }
 
-    private void footerShow() {
+    public void footerShow() {
         if (mRequesting) return;
         if (!mHasMore.hasMore()) return;
 
         mCurPage++;
         mRefreshLoadMoreListener.onRequest(mCurPage);
         mRequesting = true;
+    }
+
+    public void setCurPage(int page) {
+        this.mCurPage = page;
+    }
+
+    public void setHasMore(boolean hasMore) {
+        this.mHasMore.setHasMore(hasMore);
+    }
+
+    public boolean isRequesting() {
+        return mRequesting;
     }
 
     private void clear() {
