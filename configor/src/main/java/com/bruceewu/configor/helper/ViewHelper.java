@@ -196,6 +196,10 @@ public class ViewHelper {
         getView(viewID).setBackground(getContext().getDrawable(drawable));
     }
 
+    public void setBgDrawable(int viewID, Drawable drawable) {
+        getView(viewID).setBackground(drawable);
+    }
+
     public void setDrawableBottom(int viewID, int drawable, int width, int height) {
         TextView textView = getView(viewID);
         if (drawable == 0) {
