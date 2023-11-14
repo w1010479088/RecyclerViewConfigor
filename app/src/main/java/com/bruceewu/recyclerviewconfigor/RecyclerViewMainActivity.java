@@ -3,6 +3,7 @@ package com.bruceewu.recyclerviewconfigor;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.webkit.ValueCallback;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -73,6 +74,10 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
                 .setIndicatorType(GalleryHolder.INDICATOR_TYPE_NUM)
                 .setTime(2)
                 .setChildren(children)
+                .setLoopCallBack(obj -> {
+                    int index = (int) obj;
+                    LogUtils.log("index--->" + index);
+                })
                 .build();
 
         items.add(gallery);

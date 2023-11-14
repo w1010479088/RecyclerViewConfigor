@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
+import android.webkit.ValueCallback;
 
 import com.bruceewu.configor.IConfigor;
 import com.bruceewu.configor.R;
@@ -31,6 +32,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
     private int mTimerUpdate;
     private int mTimer = TIME_DEFAULT;
     private PagerSnapHelper mSnapHelper;
+    private ValueCallback<Object> mLoopCallBack;
 
     public static DisplayItem newInstance(float scale, List<Pair<String, Object>> items) {
         int width = IConfigor.configor().getScreenWidth() - IConfigor.configor().dip2px(15 * 2);
@@ -137,6 +139,9 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         } else if (showNumIndicator()) {
             mHelper.setText(R.id.indicator_num, String.format("%d/%d", (realPos + 1), mRealSize));
         }
+        if (mInfinite && mLoopCallBack != null) {
+            mLoopCallBack.onReceiveValue(realPos);
+        }
     }
 
     private int fixPos(int pos) {
@@ -157,6 +162,7 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
         Object timeObj = item.getExtra("time");
         Object hideIndicatorObj = item.getExtra("hide_indicator");
         Object indicatorTypeObj = item.getExtra("indicator_type");
+        Object loopCallBack = item.getExtra("loop_callback");
         if (infiniteObj != null) {
             mInfinite = (boolean) infiniteObj;
         }
@@ -176,6 +182,9 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
             mIndicatorType = (String) indicatorTypeObj;
         } else {
             mIndicatorType = INDICATOR_TYPE_DOT;
+        }
+        if (loopCallBack instanceof ValueCallback) {
+            mLoopCallBack = (ValueCallback<Object>) loopCallBack;
         }
         getConfigor().config(mInfinite);
     }
@@ -249,6 +258,11 @@ public class GalleryHolder extends HorizontalHolder implements ThreadPool.IUpdat
 
         public Builder setChildren(List<DisplayItem> children) {
             gallery.setChildren(children);
+            return this;
+        }
+
+        public Builder setLoopCallBack(ValueCallback<Object> callBack) {
+            gallery.putExtra("loop_callback", callBack);
             return this;
         }
 
