@@ -50,6 +50,21 @@ public abstract class CusBaseHolder extends RecyclerView.ViewHolder {
             view.setLayoutParams(params);
         }
         setMargin(view, item);
+        setBg(view, item);
+    }
+
+    protected void setBg(View view, DisplayItem item) {
+        Object colorObj = item.getExtra("bg_color");
+        if (colorObj != null) {
+            int bgColor = (int) colorObj;
+            view.setBackgroundColor(bgColor);
+        }
+
+        Object drawableObj = item.getExtra("bg_drawable");
+        if (drawableObj != null) {
+            int bgDrawable = (int) drawableObj;
+            view.setBackgroundResource(bgDrawable);
+        }
     }
 
     protected void setMargin(View view, DisplayItem item) {

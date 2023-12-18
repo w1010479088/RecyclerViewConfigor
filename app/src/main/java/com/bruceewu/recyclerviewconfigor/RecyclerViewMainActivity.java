@@ -57,7 +57,6 @@ public class RecyclerViewMainActivity extends AppCompatActivity {
                 .buildInfinite(false)
                 .buildClickListener(item -> {
                 })
-                .buildBgColor(getResources().getColor(R.color.black))
                 .build();
 
         List<DisplayItem> items = new ArrayList<>();

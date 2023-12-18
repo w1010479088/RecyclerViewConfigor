@@ -47,11 +47,6 @@ public class HorizontalHolder extends CusBaseHolder {
             boolean nestScroll = (boolean) nestScrollObj;
             getRecyclerView().setNestedScrollingEnabled(nestScroll); // 防止协同布局出现滑动冲突
         }
-        Object colorObj = item.getExtra("bg_color");
-        if (colorObj != null) {
-            int bgColor = (int) colorObj;
-            mConfigor.config(bgColor);
-        }
         mConfigor.config(listener);
         mConfigor.set(item.children());
     }

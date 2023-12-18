@@ -35,15 +35,13 @@ public class RecyclerViewConfigor {
     private final HasMoreWrapperEntity mHasMore = new HasMoreWrapperEntity();
     private final DisplayItem mFooter = DisplayItem.newItem(DefaultHolders.Footer.showType());
 
-    private int bgColor;
     private int mCurPage = 1;
     private int mSpanSize = 2;
     private boolean mRequesting = false;
     private CusBaseAdapter mAdapter;
 
-    private RecyclerViewConfigor(RecyclerView recyclerView, @Nullable IRefresher refreshLayout, ScrollType type, int spanSize, int horizontalPadding, int bgColor, boolean refresh, boolean loadMore, @Nullable OnRefreshLoadMoreListener refreshLoadMoreListener) {
+    private RecyclerViewConfigor(RecyclerView recyclerView, @Nullable IRefresher refreshLayout, ScrollType type, int spanSize, int horizontalPadding, boolean refresh, boolean loadMore, @Nullable OnRefreshLoadMoreListener refreshLoadMoreListener) {
         this.mRecyclerView = recyclerView;
-        this.bgColor = bgColor;
         this.mRefreshLayout = refreshLayout;
         this.mScrollType = type;
         if (spanSize != 0) {
@@ -73,13 +71,6 @@ public class RecyclerViewConfigor {
 
     public void config(boolean infinite) {
         mAdapter.set(infinite);
-    }
-
-    public void config(int bgColor) {
-        this.bgColor = bgColor;
-        if (this.bgColor != 0) {
-            mRecyclerView.setBackgroundColor(this.bgColor);
-        }
     }
 
     public void set(List<DisplayItem> items) {
@@ -136,7 +127,6 @@ public class RecyclerViewConfigor {
                 }
             }
         });
-        config(bgColor);
         if (horizontalPadding != 0) {
             mRecyclerView.setPadding(horizontalPadding, 0, horizontalPadding, 0);
         }
@@ -222,18 +212,12 @@ public class RecyclerViewConfigor {
         private OnRefreshLoadMoreListener refreshLoadMoreListener;
         private int spanSize;
         private int horizontalPadding;
-        private int bgColor;
         private boolean infinite;
         private boolean refresh;
         private boolean loadMore;
 
         public Builder buildRecyclerView(RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
-            return this;
-        }
-
-        public Builder buildBgColor(int bgColor) {
-            this.bgColor = bgColor;
             return this;
         }
 
@@ -283,7 +267,7 @@ public class RecyclerViewConfigor {
         }
 
         public RecyclerViewConfigor build() {
-            RecyclerViewConfigor configor = new RecyclerViewConfigor(recyclerView, refreshLayout, scrollType, spanSize, horizontalPadding, bgColor, refresh, loadMore, refreshLoadMoreListener);
+            RecyclerViewConfigor configor = new RecyclerViewConfigor(recyclerView, refreshLayout, scrollType, spanSize, horizontalPadding, refresh, loadMore, refreshLoadMoreListener);
             configor.config(listener);
             configor.config(infinite);
             return configor;
